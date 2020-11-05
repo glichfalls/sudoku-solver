@@ -4,10 +4,17 @@ import ch.juventus.exceptions.InvalidFieldException;
 import ch.juventus.importer.SudokuImport;
 import ch.juventus.puzzle.Sudoku;
 import ch.juventus.solver.SudokuSolver;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
 
 import java.io.IOException;
 
-public class Game {
+public class Game extends Application {
 
     public void run() {
         SudokuImport importer = new SudokuImport();
@@ -28,8 +35,21 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        Game game = new Game();
-        game.run();
+        launch(args);
     }
 
+    public void start(Stage mainStage) throws Exception {
+        GameController controller = new GameController();
+        Parent loader = MyFXMLLoader.loadFXML("MainScene","");
+
+        Scene scene = new Scene(loader);
+
+        //Stage stuff
+        mainStage.setTitle("This is a Title...");
+        mainStage.setWidth(600);
+        mainStage.setHeight(400);
+        mainStage.setScene(scene);
+
+        mainStage.show();
+    }
 }
