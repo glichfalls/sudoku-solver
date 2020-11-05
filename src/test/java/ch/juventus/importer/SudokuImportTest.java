@@ -11,7 +11,7 @@ public class SudokuImportTest {
 
     @Test
     public void testValidImport() throws IOException {
-        SudokuImport importer = new SudokuImport();
+        SudokuImporter importer = new SudokuImporter();
         Sudoku sudoku = importer.read("test.txt");
         Integer[][] expected = {
             {9,5,8,2,0,0,7,0,0},

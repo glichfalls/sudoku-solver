@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class SudokuImport {
+public class SudokuImporter {
 
     public Sudoku read(String path) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(path));

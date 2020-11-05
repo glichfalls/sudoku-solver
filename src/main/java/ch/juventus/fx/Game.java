@@ -1,7 +1,7 @@
 package ch.juventus.fx;
 
 import ch.juventus.exceptions.InvalidFieldException;
-import ch.juventus.importer.SudokuImport;
+import ch.juventus.importer.SudokuImporter;
 import ch.juventus.puzzle.Sudoku;
 import ch.juventus.solver.SudokuSolver;
 import javafx.application.Application;
@@ -14,7 +14,7 @@ import java.io.IOException;
 public class Game extends Application {
 
     public void run() {
-        SudokuImport importer = new SudokuImport();
+        SudokuImporter importer = new SudokuImporter();
         try {
             Sudoku sudoku = importer.read("test.txt");
             SudokuSolver solver = new SudokuSolver();
