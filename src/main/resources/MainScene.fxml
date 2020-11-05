@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+
+<VBox xmlns:fx="http://javafx.com/fxml">
+    <children>
+        <Label styleClass="header" text="Hello World FXML"/>
+        <Label fx:id="label1" text="This looks pretty damn shitty"/>
+        <Button fx:id="button1" text="Hopp Los!" onAction="#buttonClicked"/>
+    </children>
+
+    <stylesheets>
+        <URL value="@ch/juventus/fx/styles/style.css"/>
+    </stylesheets>
+</VBox>
