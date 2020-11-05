@@ -24,9 +24,7 @@ public class SudokuImportTest {
             {0,8,1,0,0,0,9,0,0},
             {0,0,0,6,2,0,0,0,0},
         };
-        for(int i = 0; i < 9; i++) {
-            assertArrayEquals(expected[i], sudoku.get(i));
-        }
+        assertArrayEquals(expected, sudoku.get());
     }
 
 }
