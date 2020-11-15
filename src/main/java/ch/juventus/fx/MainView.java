@@ -25,7 +25,6 @@ public class MainView {
         controller = new GameController();
     }
 
-
     public Scene getScene() {
         stage.resizableProperty().setValue(false);
         BorderPane rootPane = new BorderPane();
@@ -39,7 +38,6 @@ public class MainView {
         mainScene.getStylesheets().add(this.getClass().getResource("/MainViewStyle.css").toExternalForm());
         return mainScene;
     }
-
     private HBox sudokuPane() {
         HBox rootPane = new HBox();
         StackPane stackPane = new StackPane();
@@ -60,7 +58,6 @@ public class MainView {
 
         return rootPane;
     }
-
     private HBox buttonPane() {
         HBox buttonPane = new HBox();
         buttonPane.setAlignment(Pos.CENTER_LEFT);
@@ -73,7 +70,7 @@ public class MainView {
         Button SolveButton = new Button("Solve");
         SolveButton.setOnAction(event -> controller.solveGame());
         SolveButton.getStyleClass().add("buttons");
-
+        
         buttonPane.getChildren().add(LoadJSONButton);
         buttonPane.getChildren().add(SolveButton);
         return buttonPane;
