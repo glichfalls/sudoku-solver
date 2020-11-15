@@ -1,16 +1,68 @@
 package ch.juventus.fx;
 
-import javafx.event.Event;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import ch.juventus.importer.SudokuImporter;
+import ch.juventus.puzzle.Sudoku;
+import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.IOException;
 
 public class GameController {
-    public Label label1;
-    public Button button1;
+    private SudokuImporter importer = new SudokuImporter();
+    private TextField[][] sudokuFields = new TextField[9][9];
 
-    @FXML
-    public void buttonClicked(Event e) {
-        label1.setText("Even tho you clicked the Bötttten, it still doesnt look great!");
+
+    public TextField createTextField(int row, int col) {
+        TextField textField = new TextField();
+        sudokuFields[row][col] = textField;
+        textField.getStyleClass().add("textFields");
+        return textField;
+    }
+
+    public void loadJSON() {
+        File file = showFileChooser();
+        try {
+            fillValues(getValues(file));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void solveGame() {
+        System.out.println("Solve game pressed.");
+    }
+
+
+    private void fillValues(Sudoku values) {
+        for (int i = 0; i < values.getSize(); i++) {
+            for (int j = 0; j < values.getSize(); j++) {
+                sudokuFields[i][j].setText(String.valueOf(values.get(j,i)));
+            }
+        }
+    }
+
+    private File showFileChooser() {
+        Stage mainStage = new Stage();
+        FileChooser openDialog = new FileChooser();
+
+        openDialog.setTitle("Öffne Sudokudatei");
+        openDialog.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Sudoku files", "*.json"),
+                new FileChooser.ExtensionFilter("Sudoku text files", "*.txt")
+        );
+
+        File file = openDialog.showOpenDialog(mainStage);
+        if (file != null) {
+            return file;
+        }
+
+        return null;
+    }
+
+    private Sudoku getValues(File sourceFile) throws IOException {
+        return importer.read(sourceFile.getPath());
     }
 }

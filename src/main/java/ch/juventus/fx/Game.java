@@ -8,7 +8,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+
 import java.io.IOException;
 
 public class Game extends Application {
@@ -37,13 +40,9 @@ public class Game extends Application {
 
     @Override
     public void start(Stage mainStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/game.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        mainStage.setTitle("This is a Title...");
-        mainStage.setWidth(600);
-        mainStage.setHeight(400);
-        mainStage.setScene(scene);
+        mainStage.setTitle("Sudoku solver");
+        mainStage.setScene(new MainView(mainStage, 10d, 10d).getScene());
         mainStage.show();
     }
+
 }
