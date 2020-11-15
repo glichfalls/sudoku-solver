@@ -16,24 +16,6 @@ import java.io.IOException;
 
 public class Game extends Application {
 
-    public void run() {
-        SudokuImporter importer = new SudokuImporter();
-        try {
-            Sudoku sudoku = importer.read("test.txt");
-            SudokuSolver solver = new SudokuSolver();
-            if(solver.solve(sudoku)) {
-                System.out.println("solved!");
-            } else {
-                System.out.println("failed!");
-            }
-            sudoku.print();
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        } catch (InvalidFieldException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void main(String[] args) {
         launch(args);
     }
