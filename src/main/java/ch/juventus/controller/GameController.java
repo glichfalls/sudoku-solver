@@ -1,4 +1,4 @@
-package ch.juventus.fx;
+package ch.juventus.controller;
 
 import ch.juventus.exceptions.InvalidFieldException;
 import ch.juventus.importer.SudokuImporter;
@@ -12,10 +12,10 @@ import java.io.File;
 import java.io.IOException;
 
 public class GameController {
-    private SudokuImporter importer = new SudokuImporter();
-    private SudokuSolver solver = new SudokuSolver();
-    private TextField[][] sudokuFields = new TextField[9][9];
     private Sudoku sudoku;
+    private final SudokuImporter importer = new SudokuImporter();
+    private final SudokuSolver solver = new SudokuSolver();
+    private TextField[][] sudokuFields = new TextField[9][9];
 
     public TextField createTextField(int row, int col) {
         TextField textField = new TextField();
@@ -24,10 +24,10 @@ public class GameController {
         return textField;
     }
 
-    public void loadJSON() {
+    public void loadFile() {
         File sudokufile = showFileChooser();
         try {
-            sudoku = decodeFile(sudokufile);
+            sudoku = importer.read(sudokufile.getPath());
             fillValues();
         }
         catch (IOException e) {
@@ -37,7 +37,7 @@ public class GameController {
 
     public void solveGame() {
         try {
-            if (solver(sudoku)) {
+            if (solver.solve(sudoku)) {
                 fillValues();
             }
         } catch (InvalidFieldException e) {
@@ -62,33 +62,11 @@ public class GameController {
         return null;
     }
 
-    private boolean getValues() throws InvalidFieldException {
-
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                sudoku.set(i,j,Integer.valueOf(sudokuFields[j][i].getText()));
-            }
-        }
-        return true;
-    }
-
     private void fillValues() {
         for (int i = 0; i < sudoku.getSize(); i++) {
             for (int j = 0; j < sudoku.getSize(); j++) {
-                sudokuFields[i][j].setText(String.valueOf(sudoku.get(j,i)));
+                sudokuFields[i][j].setText(sudoku.get(j, i) != 0 ? sudoku.get(j, i).toString() : "");
             }
         }
     }
-
-    private boolean solver(Sudoku puzzle) throws InvalidFieldException {
-        if(solver.solve(puzzle)) {
-            return true;
-        }
-        return false;
-    }
-
-    private Sudoku decodeFile(File sourceFile) throws IOException {
-        return importer.read(sourceFile.getPath());
-    }
-
 }
