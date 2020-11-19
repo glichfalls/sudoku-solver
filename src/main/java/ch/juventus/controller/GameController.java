@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class GameController {
     private Sudoku sudoku;
@@ -25,12 +26,12 @@ public class GameController {
     }
 
     public void loadFile() {
-        File sudokufile = showFileChooser();
         try {
-            sudoku = importer.read(sudokufile.getPath());
+            File sudokufile = showFileChooser();
+            sudoku = importer.read(Objects.requireNonNull(sudokufile).getPath());
+            sudokuFields = new TextField[sudoku.getSize()][sudoku.getSize()];
             fillValues();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -54,12 +55,7 @@ public class GameController {
                 new FileChooser.ExtensionFilter("Sudoku text files", "*.txt")
         );
 
-        File file = openDialog.showOpenDialog(mainStage);
-        if (file != null) {
-            return file;
-        }
-
-        return null;
+        return openDialog.showOpenDialog(mainStage);
     }
 
     private void fillValues() {
