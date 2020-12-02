@@ -10,7 +10,7 @@ public class Game extends Application {
     }
 
     @Override
-    public void start(Stage mainStage) throws Exception {
+    public void start(Stage mainStage) {
         mainStage.setTitle("Sudoku solver");
         mainStage.setScene(new MainView(mainStage).getScene());
         mainStage.show();

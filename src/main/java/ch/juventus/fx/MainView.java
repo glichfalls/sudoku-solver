@@ -10,15 +10,15 @@ import javafx.stage.Stage;
 
 public class MainView {
 
-    private Stage stage = new Stage();
+    private Stage stage;
     private GameController controller;
 
-    public MainView(Stage stage) {
+    MainView(Stage stage) {
         this.stage = stage;
         controller = new GameController();
     }
 
-    public Scene getScene() {
+    Scene getScene() {
         stage.resizableProperty().setValue(false);
         BorderPane rootPane = new BorderPane();
 

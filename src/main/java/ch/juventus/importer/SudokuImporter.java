@@ -6,16 +6,16 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class SudokuImporter {
+public class SudokuImporter implements PuzzleImporter<Sudoku> {
 
     public Sudoku read(String path) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(path));
-        Integer[][] puzzle = new Integer[9][9];
+        int[][] puzzle = new int[9][9];
         String line;
         for(int x = 0; x < 9; x++) {
             line = reader.readLine();
             String[] values = line.split(";");
-            Integer[] numbers = new Integer[9];
+            int[] numbers = new int[9];
             for(int i = 0; i < 9; i++) {
                 try {
                     numbers[i] = values[i].equals("") ? 0 : Integer.parseInt(values[i]);
