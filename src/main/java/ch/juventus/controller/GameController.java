@@ -35,15 +35,17 @@ public class GameController {
         return textField;
     }
 
-    public void loadFile() {
-        try {
-            File file = getSudokuFile();
-            sudoku = importer.read(Objects.requireNonNull(file).getPath());
-            sudokuFields = new TextField[sudoku.getSize()][sudoku.getSize()];
-            fillValues();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public TextField createTextField(int row, int col, int value) {
+        TextField textField = createTextField(row, col);
+        textField.setText(value != 0 ? String.valueOf(value) : "");
+        return textField;
+    }
+
+    public Sudoku loadFile() throws IOException {
+        File file = getSudokuFile();
+        sudoku = importer.read(Objects.requireNonNull(file).getPath());
+        sudokuFields = new TextField[sudoku.getSize()][sudoku.getSize()];
+        return sudoku;
     }
 
     public void solveGame() {
@@ -70,9 +72,14 @@ public class GameController {
     }
 
     private void fillValues() {
+        sudoku.print();
         for (int i = 0; i < sudoku.getSize(); i++) {
             for (int j = 0; j < sudoku.getSize(); j++) {
-                sudokuFields[i][j].setText(sudoku.get(j, i) != 0 ? String.valueOf(sudoku.get(j, i)) : "");
+                System.out.println(i + ", " + j);
+                int field = sudoku.get(i, j);
+                System.out.println(field);
+                System.out.println(sudokuFields[i][j]);
+                sudokuFields[i][j].setText(field != 0 ? String.valueOf(field) : "");
             }
         }
     }
