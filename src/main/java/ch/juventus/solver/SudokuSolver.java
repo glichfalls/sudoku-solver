@@ -5,7 +5,7 @@ import ch.juventus.puzzle.Sudoku;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SudokuSolver implements SolverInterface<Sudoku> {
+public class SudokuSolver implements Solver<Sudoku> {
 
     private Logger logger;
 

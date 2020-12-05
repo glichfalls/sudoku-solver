@@ -2,9 +2,9 @@ package ch.juventus.controller;
 
 import ch.juventus.exceptions.UnsolvableException;
 import ch.juventus.importer.PuzzleImporter;
-import ch.juventus.importer.SudokuImporter;
+import ch.juventus.importer.SudokuTextImporter;
 import ch.juventus.puzzle.Sudoku;
-import ch.juventus.solver.SolverInterface;
+import ch.juventus.solver.Solver;
 import ch.juventus.solver.SudokuSolver;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -12,13 +12,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
 
 public class GameController {
 
     private Logger logger;
-    private final PuzzleImporter<Sudoku> importer = new SudokuImporter();
-    private final SolverInterface<Sudoku> solver = new SudokuSolver();
+    private final PuzzleImporter<Sudoku> importer = new SudokuTextImporter();
+    private final Solver<Sudoku> solver = new SudokuSolver();
 
     public GameController() {
         logger = LoggerFactory.getLogger(GameController.class);
@@ -29,7 +28,7 @@ public class GameController {
         if(file == null) {
             throw new UnsupportedOperationException("Failed to select file.");
         }
-        return importer.read(file.getPath());
+        return importer.getPuzzleFromFile(file.getPath());
     }
 
     public void solveGame(Sudoku sudoku) {

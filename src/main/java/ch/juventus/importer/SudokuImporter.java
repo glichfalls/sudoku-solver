@@ -7,42 +7,36 @@ import ch.juventus.puzzle.Sudoku;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class SudokuImporter implements PuzzleImporter<Sudoku> {
+public abstract class SudokuImporter implements PuzzleImporter<Sudoku> {
 
-    private int size;
+    protected int size;
 
-    public Sudoku read(String path) throws ImportException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-            setSizeFromFile();
-            return new Sudoku(getNumbersFromFile(reader));
+    public Sudoku getPuzzleFromFile(String path) throws ImportException {
+        try {
+            ArrayList<String> lines = read(path);
+            size = getDimensionFromFileContent(lines);
+            return new Sudoku(getNumbersFromFileContent(lines));
         } catch (Exception e) {
             throw new ImportException(e.getMessage());
         }
     }
 
-    private void setSizeFromFile() {
-        size = 9;
-    }
-
-    private int[][] getNumbersFromFile(BufferedReader reader) throws IOException, InvalidFieldException {
-        int[][] puzzle = new int[size][size];
-        for(int x = 0; x < size; x++) {
-            puzzle[x] = getNumbersFromLine(reader.readLine());
+    private ArrayList<String> read(String path) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            ArrayList<String> lines = new ArrayList<>();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+            return lines;
+        } catch (Exception e) {
+            throw new ImportException(e.getMessage());
         }
-        return puzzle;
     }
 
-    private int[] getNumbersFromLine(String line) throws IOException, InvalidFieldException {
-        String[] values = line.split(";", -1);
-        int[] numbers = new int[size];
-        for(int i = 0; i < size; i++) {
-            numbers[i] = getNumber(values.length >= i ? values[i] : "");
-        }
-        return numbers;
-    }
-
-    private int getNumber(String value) throws IOException, InvalidFieldException {
+    protected int getNumber(String value) throws IOException, InvalidFieldException {
         try {
             int number = value.equals("") ? 0 : Integer.parseInt(value);
             if(number < 0 || number > size) {
@@ -55,5 +49,9 @@ public class SudokuImporter implements PuzzleImporter<Sudoku> {
             throw new IOException("invalid character `" + value + "` in input file");
         }
     }
+
+    protected abstract int getDimensionFromFileContent(ArrayList<String> lines) throws IOException;
+
+    protected abstract int[][] getNumbersFromFileContent(ArrayList<String> lines) throws IOException;
 
 }

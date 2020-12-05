@@ -2,7 +2,7 @@ package ch.juventus.puzzle;
 
 import ch.juventus.exceptions.InvalidFieldException;
 
-public class Sudoku implements PuzzleInterface {
+public class Sudoku implements Puzzle {
 
     public static int EMPTY = 0;
 

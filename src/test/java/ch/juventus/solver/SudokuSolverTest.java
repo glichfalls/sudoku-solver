@@ -4,24 +4,22 @@ import ch.juventus.exceptions.ImportException;
 import ch.juventus.exceptions.InvalidFieldException;
 import ch.juventus.exceptions.UnsolvableException;
 import ch.juventus.importer.PuzzleImporter;
-import ch.juventus.importer.SudokuImporter;
+import ch.juventus.importer.SudokuTextImporter;
 import ch.juventus.puzzle.Sudoku;
 import org.junit.Test;
-
-import java.io.IOException;
 
 import static org.junit.Assert.*;
 
 public class SudokuSolverTest {
 
-    PuzzleImporter<Sudoku> importer = new SudokuImporter();
-    SolverInterface<Sudoku> solver = new SudokuSolver();
+    PuzzleImporter<Sudoku> importer = new SudokuTextImporter();
+    Solver<Sudoku> solver = new SudokuSolver();
 
     @Test
-    public void testSolvableSudoku() throws UnsolvableException, ImportException, InvalidFieldException, IOException {
+    public void testSolvableSudoku() throws UnsolvableException, ImportException, InvalidFieldException {
 
-        Sudoku solution = importer.read(getClass().getResource("/solution.txt").getPath());
-        Sudoku test = importer.read(getClass().getResource("/solvable.txt").getPath());
+        Sudoku solution = importer.getPuzzleFromFile(getClass().getResource("/solution.txt").getPath());
+        Sudoku test = importer.getPuzzleFromFile(getClass().getResource("/solvable.txt").getPath());
 
         solver.solve(test);
 
@@ -30,8 +28,8 @@ public class SudokuSolverTest {
     }
 
     @Test(expected = UnsolvableException.class)
-    public void testUnsolvableSudoku() throws IOException, ImportException, UnsolvableException {
-        Sudoku test = importer.read(getClass().getResource("/unsolvable.txt").getPath());
+    public void testUnsolvableSudoku() throws ImportException, UnsolvableException {
+        Sudoku test = importer.getPuzzleFromFile(getClass().getResource("/unsolvable.txt").getPath());
         solver.solve(test);
     }
 

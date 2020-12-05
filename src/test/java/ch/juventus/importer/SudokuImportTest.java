@@ -9,9 +9,9 @@ import static org.junit.Assert.*;
 public class SudokuImportTest {
 
     @Test
-    public void testValidImport() throws ImportException {
-        SudokuImporter importer = new SudokuImporter();
-        Sudoku sudoku = importer.read(getClass().getResource("/solvable.txt").getPath());
+    public void testValidTextImport() throws ImportException {
+        PuzzleImporter<Sudoku> importer = new SudokuTextImporter();
+        Sudoku sudoku = importer.getPuzzleFromFile(getClass().getResource("/solvable.txt").getPath());
         Integer[][] expected = {
             {9,5,8,2,0,0,7,0,0},
             {0,0,0,9,0,4,6,0,0},
@@ -23,6 +23,14 @@ public class SudokuImportTest {
             {0,8,1,0,0,0,9,0,0},
             {0,0,0,6,2,0,0,0,0},
         };
+        assertArrayEquals(expected, sudoku.get());
+    }
+
+    @Test
+    public void testValidJsonImport() throws ImportException {
+        PuzzleImporter<Sudoku> importer = new SudokuJsonImporter();
+        Sudoku sudoku = importer.getPuzzleFromFile(getClass().getResource("/solvable.json").getPath());
+        int[][] expected = {};
         assertArrayEquals(expected, sudoku.get());
     }
 
