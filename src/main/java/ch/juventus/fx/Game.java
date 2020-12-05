@@ -1,5 +1,6 @@
 package ch.juventus.fx;
 
+import ch.juventus.exceptions.ImportException;
 import ch.juventus.exceptions.InvalidFieldException;
 import ch.juventus.importer.SudokuImporter;
 import ch.juventus.puzzle.Sudoku;
@@ -24,10 +25,8 @@ public class Game extends Application {
                 System.out.println("failed!");
             }
             sudoku.print();
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        } catch (InvalidFieldException e) {
-            e.printStackTrace();
+        } catch (ImportException | InvalidFieldException e){
+            System.out.println(e.getMessage());
         }
     }
 
