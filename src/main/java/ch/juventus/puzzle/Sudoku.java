@@ -7,22 +7,41 @@ public class Sudoku implements PuzzleInterface {
     public static int EMPTY = 0;
 
     private int size;
-    private Integer[][] puzzle;
+    private int[][] puzzle;
 
-    public Sudoku(Integer[][] puzzle) {
-        this.puzzle = puzzle;
-        this.size = puzzle.length;
+    public Sudoku() {
+        size = 9;
+        puzzle = new int[size][size];
     }
 
+    public Sudoku(int[][] puzzle) {
+        this.puzzle = puzzle;
+        size = puzzle.length;
+    }
+
+    /**
+     * Get the dimension of the board
+     * @return the size of the board
+     */
     public int getSize() {
         return size;
     }
 
-    public Integer get(int x, int y) {
+    /**
+     * Get a number of a two dimensional matrix
+     * @param x the row number of the field starting at 0
+     * @param y the column number of the field starting at 0
+     * @return the number in the selected field or null
+     */
+    public int get(int x, int y) {
         return puzzle[x][y];
     }
 
-    public Integer[][] get() {
+    /**
+     * Get the whole board
+     * @return the board as array of integers
+     */
+    public int[][] get() {
         return puzzle;
     }
 
@@ -44,6 +63,7 @@ public class Sudoku implements PuzzleInterface {
         return false;
     }
 
+
     private boolean isNumberInSquare(int x, int y, int number) {
         int row = x - x % 3;
         int column = y - y % 3;
@@ -57,10 +77,24 @@ public class Sudoku implements PuzzleInterface {
         return false;
     }
 
-    public boolean isNumberNotPresent(int row, int col, int number) {
-        return !isNumberInRow(row, number) && !isNumberInColumn(col, number) && !isNumberInSquare(row, col, number);
+    /**
+     * Check all constraints for the input number
+     * @param row the row
+     * @param col the column
+     * @param number the number to check
+     * @return true if the number can be placed in this field or false if not
+     */
+    public boolean isNumberPresent(int row, int col, int number) {
+        return isNumberInRow(row, number) || isNumberInColumn(col, number) || isNumberInSquare(row, col, number);
     }
 
+    /**
+     * Set a number on the selected
+     * @param x the row where the number should be placed in
+     * @param y the column where the number should be placed in
+     * @param number the number to place in the coordinates
+     * @throws InvalidFieldException if the number is too high or too low
+     */
     public void set(int x, int y, int number) throws InvalidFieldException {
         if(number > 9 || number < 0) {
             throw new InvalidFieldException("the number " + number + " is not a valid sudoku number.");
@@ -69,8 +103,8 @@ public class Sudoku implements PuzzleInterface {
     }
 
     public void print() {
-        for(Integer[] row : puzzle) {
-            for(Integer column : row) {
+        for(int[] row : puzzle) {
+            for(int column : row) {
                 System.out.print(column);
             }
             System.out.print("\n");

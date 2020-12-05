@@ -8,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class SudokuImporter {
+public class SudokuImporter implements PuzzleImporter<Sudoku> {
 
     private int size;
 
@@ -25,17 +25,17 @@ public class SudokuImporter {
         size = 9;
     }
 
-    private Integer[][] getNumbersFromFile(BufferedReader reader) throws IOException, InvalidFieldException {
-        Integer[][] puzzle = new Integer[size][size];
+    private int[][] getNumbersFromFile(BufferedReader reader) throws IOException, InvalidFieldException {
+        int[][] puzzle = new int[size][size];
         for(int x = 0; x < size; x++) {
             puzzle[x] = getNumbersFromLine(reader.readLine());
         }
         return puzzle;
     }
 
-    private Integer[] getNumbersFromLine(String line) throws IOException, InvalidFieldException {
+    private int[] getNumbersFromLine(String line) throws IOException, InvalidFieldException {
         String[] values = line.split(";");
-        Integer[] numbers = new Integer[size];
+        int[] numbers = new int[size];
         for(int i = 0; i < size; i++) {
             numbers[i] = getNumber(values[i]);
         }

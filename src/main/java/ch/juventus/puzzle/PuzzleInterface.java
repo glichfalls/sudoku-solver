@@ -1,9 +1,10 @@
 package ch.juventus.puzzle;
 
-import ch.juventus.solver.SolverInterface;
-
 public interface PuzzleInterface {
 
-
+    /**
+     * print the current state of the board
+     */
+    void print();
 
 }

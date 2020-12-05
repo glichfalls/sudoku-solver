@@ -1,0 +1,53 @@
+/* Padding = top right bottom left */
+
+.root {
+    -fx-background-color: lightgray;
+}
+
+.buttonPane {
+    -fx-padding: 5 0 0 5;
+    -fx-spacing: 5;
+}
+
+.sudokuPane {
+    -fx-padding: 5 5 0 5;
+    -fx-hgap: 5;
+    -fx-vgap: 5;
+}
+
+.textFields {
+    -fx-pref-width: 40;
+    -fx-pref-height: 40;
+    -fx-font-size: 20;
+    -fx-border-color: gray;
+    -fx-background-color: transparent;
+    -fx-alignment: center;
+}
+
+.cell {
+
+    /* Defines a black border around the standard color -fx-base */
+    -fx-background-color:  black, -fx-base ;
+
+    /* By default draw the base color over the whole region, so no border visible */
+    -fx-background-insets: 0, 0 ;
+
+    -fx-padding: 5px;
+}
+
+.cell:right {
+    -fx-background-insets: 0, 0 1 0 0 ;
+}
+
+.cell:bottom {
+    -fx-background-insets: 0, 0 0 1 0 ;
+}
+
+.cell:right:bottom {
+    -fx-background-insets: 0, 0 1 1 0 ;
+}
+
+.cell .text-field {
+    -fx-pref-width: 40;
+    -fx-pref-height: 40;
+}
