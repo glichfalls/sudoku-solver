@@ -9,9 +9,14 @@ public class Sudoku implements PuzzleInterface {
     private int size;
     private int[][] puzzle;
 
+    public Sudoku() {
+        size = 9;
+        puzzle = new int[size][size];
+    }
+
     public Sudoku(int[][] puzzle) {
         this.puzzle = puzzle;
-        this.size = puzzle.length;
+        size = puzzle.length;
     }
 
     /**
@@ -80,7 +85,7 @@ public class Sudoku implements PuzzleInterface {
      * @return true if the number can be placed in this field or false if not
      */
     public boolean isNumberPresent(int row, int col, int number) {
-        return isNumberInRow(row, number) && isNumberInColumn(col, number) && isNumberInSquare(row, col, number);
+        return isNumberInRow(row, number) || isNumberInColumn(col, number) || isNumberInSquare(row, col, number);
     }
 
     /**

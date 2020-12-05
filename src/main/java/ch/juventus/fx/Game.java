@@ -12,7 +12,7 @@ public class Game extends Application {
     @Override
     public void start(Stage mainStage) {
         mainStage.setTitle("Sudoku solver");
-        mainStage.setScene(new MainView(mainStage).getScene());
+        mainStage.setScene(new MainView(mainStage).getMainScene());
         mainStage.show();
     }
 

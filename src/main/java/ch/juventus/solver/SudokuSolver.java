@@ -33,6 +33,7 @@ public class SudokuSolver implements SolverInterface<Sudoku> {
         for (int number = 1; number <= puzzle.getSize(); number++) {
             try {
                 setNumber(puzzle, x, y, number);
+                return;
             } catch (InvalidFieldException e) {
                 logger.error(e.getMessage());
             }
@@ -44,6 +45,7 @@ public class SudokuSolver implements SolverInterface<Sudoku> {
         // check if the current number can be placed at the current position
         if (!puzzle.isNumberPresent(x, y, number)) {
             puzzle.set(x, y, number);
+            System.out.println(number + ": " + x + "/" + y);
             // try to finish with the set value
             try {
                 solve(puzzle);
