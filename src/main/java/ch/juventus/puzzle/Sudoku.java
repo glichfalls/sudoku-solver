@@ -28,6 +28,16 @@ public class Sudoku implements PuzzleInterface {
     }
 
     /**
+     * Check if the field is empty
+     * @param x row
+     * @param y column
+     * @return is set
+     */
+    public boolean isEmpty(int x, int y) {
+        return get(x, y) == Sudoku.EMPTY;
+    }
+
+    /**
      * Get a number of a two dimensional matrix
      * @param x the row number of the field starting at 0
      * @param y the column number of the field starting at 0
@@ -96,10 +106,14 @@ public class Sudoku implements PuzzleInterface {
      * @throws InvalidFieldException if the number is too high or too low
      */
     public void set(int x, int y, int number) throws InvalidFieldException {
-        if(number > 9 || number < 0) {
+        if(number > getSize() || number < 0) {
             throw new InvalidFieldException("the number " + number + " is not a valid sudoku number.");
         }
         this.puzzle[x][y] = number;
+    }
+
+    public void clear(int x, int y) {
+        puzzle[x][y] = Sudoku.EMPTY;
     }
 
     public void print() {
