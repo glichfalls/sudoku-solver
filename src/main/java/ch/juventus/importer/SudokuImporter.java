@@ -34,28 +34,25 @@ public class SudokuImporter implements PuzzleImporter<Sudoku> {
     }
 
     private int[] getNumbersFromLine(String line) throws IOException, InvalidFieldException {
-        String[] values = line.split(";");
+        String[] values = line.split(";", -1);
         int[] numbers = new int[size];
         for(int i = 0; i < size; i++) {
-            numbers[i] = getNumber(values[i]);
+            numbers[i] = getNumber(values.length >= i ? values[i] : "");
         }
         return numbers;
     }
 
-    private Integer getNumber(String value) throws IOException, InvalidFieldException {
+    private int getNumber(String value) throws IOException, InvalidFieldException {
         try {
             int number = value.equals("") ? 0 : Integer.parseInt(value);
-            if(number <= 0 || number > size) {
+            if(number < 0 || number > size) {
                 // catch out of bound
-                throw new InvalidFieldException("The number " + value + " does not fit in this sudoku.");
+                throw new InvalidFieldException("The number `" + number + "` does not fit in this sudoku.");
             }
             return number;
         } catch (NumberFormatException e) {
             // catch wrong format
             throw new IOException("invalid character `" + value + "` in input file");
-        } catch (IndexOutOfBoundsException e) {
-            // catch empty index after last number
-            return 0;
         }
     }
 

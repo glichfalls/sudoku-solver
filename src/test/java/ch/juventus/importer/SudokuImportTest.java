@@ -4,14 +4,12 @@ import ch.juventus.exceptions.ImportException;
 import ch.juventus.puzzle.Sudoku;
 import org.junit.Test;
 
-import java.io.IOException;
-
 import static org.junit.Assert.*;
 
 public class SudokuImportTest {
 
     @Test
-    public void testValidImport() throws IOException, ImportException {
+    public void testValidImport() throws ImportException {
         SudokuImporter importer = new SudokuImporter();
         Sudoku sudoku = importer.read(getClass().getResource("/test.txt").getPath());
         Integer[][] expected = {
