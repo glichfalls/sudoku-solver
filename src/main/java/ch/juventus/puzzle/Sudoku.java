@@ -33,8 +33,8 @@ public class Sudoku implements PuzzleInterface {
      * @param y column
      * @return is set
      */
-    public boolean isEmpty(int x, int y) {
-        return get(x, y) == Sudoku.EMPTY;
+    public boolean isFilled(int x, int y) {
+        return get(x, y) != Sudoku.EMPTY;
     }
 
     /**
@@ -56,35 +56,49 @@ public class Sudoku implements PuzzleInterface {
     }
 
     private boolean isNumberInRow(int row, int number) {
+        return countOccurrencesInRow(row, number) > 0;
+    }
+
+    private int countOccurrencesInRow(int x, int number) {
+        int occurrences = 0;
         for(int y = 0; y < 9; y++) {
-            if(puzzle[row][y] == number) {
-                return true;
+            if(puzzle[x][y] == number) {
+                occurrences++;
             }
         }
-        return false;
+        return occurrences;
     }
 
     private boolean isNumberInColumn(int column, int number) {
-        for(int x = 0; x < 9; x++) {
-            if(puzzle[x][column] == number) {
-                return true;
-            }
-        }
-        return false;
+        return countOccurrencesInColumn(column, number) > 0;
     }
 
+    private int countOccurrencesInColumn(int y, int number) {
+        int occurrences = 0;
+        for(int x = 0; x < 9; x++) {
+            if(puzzle[x][y] == number) {
+                occurrences++;
+            }
+        }
+        return occurrences;
+    }
 
     private boolean isNumberInSquare(int x, int y, int number) {
+        return countOccurrencesInSquare(x, y, number) > 0;
+    }
+
+    private int countOccurrencesInSquare(int x, int y, int number) {
+        int occurrences = 0;
         int row = x - x % 3;
         int column = y - y % 3;
-        for (int i = row; i < row+3; i++) {
-            for (int j = column; j < column+3; j++) {
+        for (int i = row; i < row + 3; i++) {
+            for (int j = column; j < column + 3; j++) {
                 if (puzzle[i][j] == number) {
-                    return true;
+                    occurrences++;
                 }
             }
         }
-        return false;
+        return occurrences;
     }
 
     /**
@@ -96,6 +110,13 @@ public class Sudoku implements PuzzleInterface {
      */
     public boolean isNumberPresent(int row, int col, int number) {
         return isNumberInRow(row, number) || isNumberInColumn(col, number) || isNumberInSquare(row, col, number);
+    }
+
+    public boolean isNumberPresentMoreThanOnce(int x, int y, int number) {
+        return countOccurrencesInRow(x, number) +
+                countOccurrencesInColumn(y, number) +
+                countOccurrencesInSquare(x, y, number)
+                > 3;
     }
 
     /**

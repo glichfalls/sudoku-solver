@@ -14,19 +14,25 @@ import static org.junit.Assert.*;
 
 public class SudokuSolverTest {
 
-    @Test
-    public void testValidSolve() throws UnsolvableException, ImportException, InvalidFieldException, IOException {
+    PuzzleImporter<Sudoku> importer = new SudokuImporter();
+    SolverInterface<Sudoku> solver = new SudokuSolver();
 
-        PuzzleImporter<Sudoku> importer = new SudokuImporter();
-        SolverInterface<Sudoku> solver = new SudokuSolver();
+    @Test
+    public void testSolvableSudoku() throws UnsolvableException, ImportException, InvalidFieldException, IOException {
 
         Sudoku solution = importer.read(getClass().getResource("/solution.txt").getPath());
-        Sudoku test = importer.read(getClass().getResource("/test.txt").getPath());
+        Sudoku test = importer.read(getClass().getResource("/solvable.txt").getPath());
 
         solver.solve(test);
 
         assertArrayEquals(solution.get(), test.get());
 
+    }
+
+    @Test(expected = UnsolvableException.class)
+    public void testUnsolvableSudoku() throws IOException, ImportException, UnsolvableException {
+        Sudoku test = importer.read(getClass().getResource("/unsolvable.txt").getPath());
+        solver.solve(test);
     }
 
 }
