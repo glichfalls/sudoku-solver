@@ -1,7 +1,8 @@
 package ch.juventus.solver;
 
 import ch.juventus.exceptions.UnsolvableException;
-import ch.juventus.puzzle.Sudoku;
+import ch.juventus.puzzle.sudoku.Sudoku;
+import ch.juventus.puzzle.sudoku.SudokuValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,15 +57,20 @@ public class SudokuSolver implements Solver<Sudoku> {
     }
 
     private boolean isSolvable(Sudoku sudoku) {
+        int filledFields = 0;
         for(int x = 0; x < sudoku.getSize(); x++) {
             for(int y = 0; y < sudoku.getSize(); y++) {
-                if(sudoku.isFilled(x, y) && sudoku.isNumberPresentMoreThanOnce(x, y, sudoku.get(x, y))) {
-                    logger.warn("The number " + sudoku.get(x, y) + " in " + x + ", " + y + " occurs more than once.");
-                    return false;
+                if(sudoku.isFilled(x, y)) {
+                    filledFields++;
+                    int value = sudoku.get(x, y).number;
+                    if(sudoku.isNumberPresentMoreThanOnce(x, y, value)) {
+                        logger.warn("The number " + value + " in " + x + ", " + y + " occurs more than once.");
+                        return false;
+                    }
                 }
             }
         }
-        return true;
+        return filledFields > 0;
     }
 
 }

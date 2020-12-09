@@ -5,7 +5,7 @@ import ch.juventus.exceptions.InvalidFieldException;
 import ch.juventus.exceptions.UnsolvableException;
 import ch.juventus.importer.PuzzleImporter;
 import ch.juventus.importer.SudokuTextImporter;
-import ch.juventus.puzzle.Sudoku;
+import ch.juventus.puzzle.sudoku.Sudoku;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

@@ -1,6 +1,7 @@
-package ch.juventus.puzzle;
+package ch.juventus.puzzle.sudoku;
 
 import ch.juventus.exceptions.InvalidFieldException;
+import ch.juventus.puzzle.Puzzle;
 
 public class Sudoku implements Puzzle {
 
