@@ -39,7 +39,7 @@ public class SudokuSolver implements Solver<Sudoku> {
 
                     try {
                         // try to finish with the added number
-                        puzzle.set(x, y, number);
+                        puzzle.set(new SudokuValue(x, y, number));
                         solve(puzzle);
                         logger.debug("sudoku is solvable.");
                         return;

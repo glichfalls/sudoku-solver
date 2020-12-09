@@ -1,6 +1,7 @@
 package ch.juventus.fx;
 
-import ch.juventus.puzzle.Sudoku;
+import ch.juventus.puzzle.sudoku.Sudoku;
+import ch.juventus.puzzle.sudoku.SudokuValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -13,7 +14,6 @@ class SudokuPane extends HBox {
     private GridPane grid = new GridPane();
 
     SudokuPane() {
-        super();
         StackPane stack = new StackPane();
         setAlignment(Pos.CENTER);
         load(new Sudoku());
@@ -24,21 +24,35 @@ class SudokuPane extends HBox {
 
     void load(Sudoku sudoku) {
         this.sudoku = sudoku;
+        update();
+    }
+
+    void update() {
         for(int x = 0; x < sudoku.getSize(); x++) {
             for(int y = 0; y < sudoku.getSize(); y++) {
-                set(x, y, sudoku.get(x, y));
+                set(sudoku.get(x, y));
             }
         }
     }
 
+    void reset() {
+        sudoku.clear();
+        update();
+    }
+
     Sudoku getSudoku() {
+        sudoku.print();
         return sudoku;
     }
 
-    private void set(int x, int y, int number) {
+    private void set(SudokuValue value) {
         TextField field = new TextField();
-        field.setText(number != 0 ? String.valueOf(number) : "");
-        grid.add(field, x, y);
+        field.setText(value.toString());
+        field.setOnKeyReleased(event -> {
+            int input = field.getText().equals("") ? Sudoku.EMPTY : Integer.parseInt(field.getText());
+            sudoku.set(new SudokuValue(value.x, value.y, input));
+        });
+        grid.add(field, value.x, value.y);
     }
 
 }

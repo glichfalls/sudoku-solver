@@ -35,7 +35,7 @@ public class Sudoku implements Puzzle {
      * @return is set
      */
     public boolean isFilled(int x, int y) {
-        return get(x, y) != Sudoku.EMPTY;
+        return get(x, y).number != Sudoku.EMPTY;
     }
 
     /**
@@ -44,8 +44,8 @@ public class Sudoku implements Puzzle {
      * @param y the column number of the field starting at 0
      * @return the number in the selected field or null
      */
-    public int get(int x, int y) {
-        return puzzle[x][y];
+    public SudokuValue get(int x, int y) {
+        return new SudokuValue(x, y, puzzle[x][y]);
     }
 
     /**
@@ -127,15 +127,20 @@ public class Sudoku implements Puzzle {
      * @param number the number to place in the coordinates
      * @throws InvalidFieldException if the number is too high or too low
      */
-    public void set(int x, int y, int number) throws InvalidFieldException {
-        if(number > getSize() || number < 0) {
-            throw new InvalidFieldException("the number " + number + " is not a valid sudoku number.");
+    public void set(SudokuValue value) throws InvalidFieldException {
+        if(value.number > getSize() || value.number < 0) {
+            throw new InvalidFieldException("the number " + value.number + " is not a valid sudoku number.");
         }
-        this.puzzle[x][y] = number;
+        System.out.println(value.x + "," + value.y + ":" + value.number);
+        this.puzzle[value.x][value.y] = value.number;
     }
 
     public void clear(int x, int y) {
         puzzle[x][y] = Sudoku.EMPTY;
+    }
+
+    public void clear() {
+        puzzle = new int[size][size];
     }
 
     public void print() {

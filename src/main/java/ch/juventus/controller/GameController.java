@@ -31,17 +31,12 @@ public class GameController {
         return importerFactory.getSudokuImporterForFile(file).getPuzzleFromFile(file.getPath());
     }
 
-    public void solveGame(Sudoku sudoku) {
-        try {
-            if(sudoku == null) {
-                logger.error("No Sudoku was loaded.");
-                return;
-            }
-            solver.solve(sudoku);
-        } catch (UnsolvableException e) {
-            sudoku.print();
-            logger.error("Failed to solve sudoku: " + e.getMessage());
+    public void solveGame(Sudoku sudoku) throws UnsolvableException {
+        if(sudoku == null) {
+            logger.error("No Sudoku was loaded.");
+            return;
         }
+        solver.solve(sudoku);
     }
 
     private File getSudokuFile() {
