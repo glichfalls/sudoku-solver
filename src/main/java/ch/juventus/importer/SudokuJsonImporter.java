@@ -1,45 +1,45 @@
 package ch.juventus.importer;
 
-
 import ch.juventus.exceptions.ImportException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class SudokuJsonImporter extends SudokuImporter {
 
     private JSONParser parser = new JSONParser();
 
     @Override
-    protected int getDimensionFromFileContent(ArrayList<String> lines) throws IOException {
+    protected int getDimensionFromFileContent(ArrayList<String> lines) {
         JSONObject json = parse(lines);
         return ((Long) json.get("size")).intValue();
     }
 
     @Override
-    protected int[][] getNumbersFromFileContent(ArrayList<String> lines) throws IOException {
+    protected int[][] getNumbersFromFileContent(ArrayList<String> lines) {
         JSONObject json = parse(lines);
-        int[][] puzzle = new int[size][];
-
+        int[][] puzzle = new int[size][size];
         JSONArray squares = (JSONArray) json.get("squares");
-        Iterator iterator = squares.iterator();
-
-        while (squares.iterator().hasNext()) {
-            Object square = iterator.next();
-            System.out.println(square);
+        for (Object sq : squares) {
+            JSONObject square = (JSONObject) sq;
+            int x = Integer.parseInt(square.get("x").toString());
+            int y = Integer.parseInt(square.get("y").toString());
+            int value = Integer.parseInt(square.get("value").toString());
+            puzzle[x][y] = value;
         }
-
         return puzzle;
     }
 
     private JSONObject parse(ArrayList<String> lines) {
         try {
-            return (JSONObject) parser.parse(lines.toString());
+            StringBuilder json = new StringBuilder();
+            for(String line : lines) {
+                json.append(line);
+            }
+            return (JSONObject) parser.parse(json.toString());
         } catch (ParseException e) {
             throw new ImportException("Failed to parse sudoku json: " + e.getMessage());
         }

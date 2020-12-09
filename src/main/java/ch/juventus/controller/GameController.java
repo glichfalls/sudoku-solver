@@ -1,9 +1,9 @@
 package ch.juventus.controller;
 
 import ch.juventus.exceptions.UnsolvableException;
-import ch.juventus.importer.PuzzleImporter;
-import ch.juventus.importer.SudokuTextImporter;
-import ch.juventus.puzzle.Sudoku;
+import ch.juventus.exceptions.UnsupportedFormatException;
+import ch.juventus.importer.ImporterFactory;
+import ch.juventus.puzzle.sudoku.Sudoku;
 import ch.juventus.solver.Solver;
 import ch.juventus.solver.SudokuSolver;
 import javafx.stage.FileChooser;
@@ -16,19 +16,19 @@ import java.io.File;
 public class GameController {
 
     private Logger logger;
-    private final PuzzleImporter<Sudoku> importer = new SudokuTextImporter();
+    private final ImporterFactory importerFactory = new ImporterFactory();
     private final Solver<Sudoku> solver = new SudokuSolver();
 
     public GameController() {
         logger = LoggerFactory.getLogger(GameController.class);
     }
 
-    public Sudoku loadFile() throws Exception {
+    public Sudoku getSelectedSudoku() throws UnsupportedFormatException {
         File file = getSudokuFile();
         if(file == null) {
             throw new UnsupportedOperationException("Failed to select file.");
         }
-        return importer.getPuzzleFromFile(file.getPath());
+        return importerFactory.getSudokuImporterForFile(file).getPuzzleFromFile(file.getPath());
     }
 
     public void solveGame(Sudoku sudoku) {

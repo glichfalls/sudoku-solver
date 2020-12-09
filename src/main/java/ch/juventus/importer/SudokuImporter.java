@@ -2,7 +2,7 @@ package ch.juventus.importer;
 
 import ch.juventus.exceptions.ImportException;
 import ch.juventus.exceptions.InvalidFieldException;
-import ch.juventus.puzzle.Sudoku;
+import ch.juventus.puzzle.sudoku.Sudoku;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -19,6 +19,7 @@ public abstract class SudokuImporter implements PuzzleImporter<Sudoku> {
             size = getDimensionFromFileContent(lines);
             return new Sudoku(getNumbersFromFileContent(lines));
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             throw new ImportException(e.getMessage());
         }
     }
