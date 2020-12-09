@@ -57,9 +57,17 @@ class MainView {
             try {
                 controller.solveGame(sudoku.getSudoku());
                 sudoku.update();
-                AlertModal.ok("Erfolgreich", "Das Sudoku konnte gelöst werden.", "").showAndWait();
+                AlertModal.ok(
+                    "Erfolgreich",
+                    "Das Sudoku konnte gelöst werden.",
+                    ""
+                ).showAndWait();
             } catch (UnsolvableException e) {
-                AlertModal.error("Fehler beim lösen", "Das Sudoku konnte nicht gelöst werden", e.getMessage()).showAndWait();
+                AlertModal.error(
+                    "Fehler beim lösen",
+                    "Das Sudoku konnte nicht gelöst werden",
+                    e.getMessage()
+                ).showAndWait();
             }
         });
         return solve;

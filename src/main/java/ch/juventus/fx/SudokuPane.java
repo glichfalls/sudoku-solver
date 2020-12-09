@@ -22,8 +22,18 @@ class SudokuPane extends HBox {
         getChildren().add(stack);
     }
 
+    Sudoku getSudoku() {
+        sudoku.print();
+        return sudoku;
+    }
+
     void load(Sudoku sudoku) {
         this.sudoku = sudoku;
+        update();
+    }
+
+    void reset() {
+        sudoku.clear();
         update();
     }
 
@@ -35,22 +45,11 @@ class SudokuPane extends HBox {
         }
     }
 
-    void reset() {
-        sudoku.clear();
-        update();
-    }
-
-    Sudoku getSudoku() {
-        sudoku.print();
-        return sudoku;
-    }
-
     private void set(SudokuValue value) {
         TextField field = new TextField();
         field.setText(value.toString());
         field.setOnKeyReleased(event -> {
-            int input = field.getText().equals("") ? Sudoku.EMPTY : Integer.parseInt(field.getText());
-            sudoku.set(new SudokuValue(value.x, value.y, input));
+            sudoku.set(new SudokuValue(value.x, value.y, field.getText()));
         });
         grid.add(field, value.x, value.y);
     }
