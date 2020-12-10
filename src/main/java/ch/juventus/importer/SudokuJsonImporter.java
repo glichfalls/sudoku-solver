@@ -1,11 +1,11 @@
 package ch.juventus.importer;
 
-import ch.juventus.exceptions.ImportException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class SudokuJsonImporter extends SudokuImporter {
@@ -13,27 +13,38 @@ public class SudokuJsonImporter extends SudokuImporter {
     private JSONParser parser = new JSONParser();
 
     @Override
-    protected int getDimensionFromFileContent(ArrayList<String> lines) {
-        JSONObject json = parse(lines);
-        return ((Long) json.get("size")).intValue();
+    protected int getDimension(ArrayList<String> lines) throws IOException {
+        return ((Long) parse(lines).get("size")).intValue();
     }
 
     @Override
-    protected int[][] getNumbersFromFileContent(ArrayList<String> lines) {
-        JSONObject json = parse(lines);
-        int[][] puzzle = new int[size][size];
-        JSONArray squares = (JSONArray) json.get("squares");
+    protected int getDimension(String puzzle) throws IOException {
+        return ((Long) parse(puzzle).get("size")).intValue();
+    }
+
+    @Override
+    protected int[][] getNumbers(String puzzle) throws IOException {
+        return getNumbersFromJsonArray((JSONArray) parse(puzzle).get("squares"));
+    }
+
+    @Override
+    protected int[][] getNumbers(ArrayList<String> lines) throws IOException {
+        return getNumbersFromJsonArray((JSONArray) parse(lines).get("squares"));
+    }
+
+    private int[][] getNumbersFromJsonArray(JSONArray squares) {
+        int[][] numbers = new int[size][size];
         for (Object sq : squares) {
             JSONObject square = (JSONObject) sq;
             int x = Integer.parseInt(square.get("x").toString());
             int y = Integer.parseInt(square.get("y").toString());
             int value = Integer.parseInt(square.get("value").toString());
-            puzzle[x][y] = value;
+            numbers[x][y] = value;
         }
-        return puzzle;
+        return numbers;
     }
 
-    private JSONObject parse(ArrayList<String> lines) {
+    private JSONObject parse(ArrayList<String> lines) throws IOException {
         try {
             StringBuilder json = new StringBuilder();
             for(String line : lines) {
@@ -41,7 +52,15 @@ public class SudokuJsonImporter extends SudokuImporter {
             }
             return (JSONObject) parser.parse(json.toString());
         } catch (ParseException e) {
-            throw new ImportException("Failed to parse sudoku json: " + e.getMessage());
+            throw new IOException("Failed to parse sudoku json: " + e.getMessage());
+        }
+    }
+
+    private JSONObject parse(String puzzle) throws IOException {
+        try {
+            return (JSONObject) parser.parse(puzzle);
+        } catch (ParseException e) {
+            throw new IOException("Failed to parse sudoku json: " + e.getMessage());
         }
     }
 

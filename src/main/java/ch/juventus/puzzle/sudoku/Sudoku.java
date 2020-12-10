@@ -20,9 +20,9 @@ public class Sudoku implements Puzzle {
         logger.debug("initialized default sudoku.");
     }
 
-    public Sudoku(int[][] puzzle) {
+    public Sudoku(int size, int[][] puzzle) {
+        this.size = size;
         this.puzzle = puzzle;
-        size = puzzle.length;
         logger.debug("initialized new sudoku with size " + size + ".");
     }
 
@@ -199,6 +199,7 @@ public class Sudoku implements Puzzle {
      */
     public void clear() {
         puzzle = new int[size][size];
+        logger.debug("cleared sudoku.");
     }
 
     /**

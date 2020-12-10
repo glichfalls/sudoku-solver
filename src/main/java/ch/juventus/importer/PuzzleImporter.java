@@ -7,4 +7,6 @@ public interface PuzzleImporter<T extends Puzzle> {
 
     T getPuzzleFromFile(String path) throws ImportException;
 
+    T getPuzzleFromString(String puzzle) throws ImportException;
+
 }

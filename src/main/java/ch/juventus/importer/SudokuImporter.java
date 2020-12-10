@@ -3,6 +3,8 @@ package ch.juventus.importer;
 import ch.juventus.exceptions.ImportException;
 import ch.juventus.exceptions.InvalidFieldException;
 import ch.juventus.puzzle.sudoku.Sudoku;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,15 +13,27 @@ import java.util.ArrayList;
 
 public abstract class SudokuImporter implements PuzzleImporter<Sudoku> {
 
+    private Logger logger = LoggerFactory.getLogger(SudokuImporter.class);
+
     protected int size;
 
     public Sudoku getPuzzleFromFile(String path) throws ImportException {
         try {
             ArrayList<String> lines = read(path);
-            size = getDimensionFromFileContent(lines);
-            return new Sudoku(getNumbersFromFileContent(lines));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            size = getDimension(lines);
+            return new Sudoku(size, getNumbers(lines));
+        } catch (IOException e) {
+            logger.error("Failed to import sudoku: " + e.getMessage());
+            throw new ImportException(e.getMessage());
+        }
+    }
+
+    public Sudoku getPuzzleFromString(String puzzle) throws ImportException {
+        try {
+            size = getDimension(puzzle);
+            return new Sudoku(size, getNumbers(puzzle));
+        } catch (IOException e) {
+            logger.error("Failed to import sudoku: " + e.getMessage());
             throw new ImportException(e.getMessage());
         }
     }
@@ -51,8 +65,12 @@ public abstract class SudokuImporter implements PuzzleImporter<Sudoku> {
         }
     }
 
-    protected abstract int getDimensionFromFileContent(ArrayList<String> lines) throws IOException;
+    protected abstract int getDimension(ArrayList<String> lines) throws IOException;
 
-    protected abstract int[][] getNumbersFromFileContent(ArrayList<String> lines) throws IOException;
+    protected abstract int getDimension(String content) throws IOException;
+
+    protected abstract int[][] getNumbers(ArrayList<String> lines) throws IOException;
+
+    protected abstract int[][] getNumbers(String content) throws IOException;
 
 }
