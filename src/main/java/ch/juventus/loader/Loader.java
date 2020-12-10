@@ -9,12 +9,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public abstract class Loader {
+public abstract class Loader implements PuzzleLoader {
 
     private Logger logger = LoggerFactory.getLogger(Loader.class);
-    private HttpURLConnection connection = null;
 
     protected String get(String url) {
+        HttpURLConnection connection = null;
         try {
             URL path = new URL(url);
             connection = (HttpURLConnection) path.openConnection();
@@ -24,6 +24,7 @@ public abstract class Loader {
             while ((line = reader.readLine()) != null) {
                 response.append(line);
             }
+            logger.debug("Loaded puzzle: " + response.toString());
             return response.toString();
         } catch (IOException e) {
             logger.error("Failed to load puzzle from " + url);
