@@ -180,7 +180,6 @@ public class Sudoku implements Puzzle {
         if(value.number > getSize() || value.number < 0) {
             throw new InvalidFieldException("the number " + value.number + " is not a valid sudoku number.");
         }
-        System.out.println(value.x + "," + value.y + ":" + value.number);
         logger.debug("Setting value in [" + value.x + "," + value.y + "] from " + puzzle[value.x][value.y] + " to " + value.number + "");
         puzzle[value.x][value.y] = value.number;
     }
