@@ -23,7 +23,6 @@ class SudokuPane extends HBox {
     }
 
     Sudoku getSudoku() {
-        sudoku.print();
         return sudoku;
     }
 

@@ -198,7 +198,6 @@ public class Sudoku implements Puzzle {
      */
     public void clear() {
         puzzle = new int[size][size];
-        print();
         logger.debug("cleared sudoku.");
     }
 
