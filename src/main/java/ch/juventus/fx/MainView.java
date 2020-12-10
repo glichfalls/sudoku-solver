@@ -1,6 +1,7 @@
 package ch.juventus.fx;
 
 import ch.juventus.controller.GameController;
+import ch.juventus.exceptions.ImportException;
 import ch.juventus.exceptions.UnsolvableException;
 import ch.juventus.exceptions.UnsupportedFormatException;
 import ch.juventus.puzzle.sudoku.Sudoku;
@@ -30,6 +31,7 @@ class MainView {
         buttons.addButton(getLoadButton());
         buttons.addButton(getSolveButton());
         buttons.addButton(getResetButton());
+        buttons.addButton(getRandomSudokuButton());
         Scene scene = new Scene(root, 450, 550);
         scene.getStylesheets().add(this.getClass().getResource("/MainViewStyle.css").toExternalForm());
         return scene;
@@ -43,7 +45,7 @@ class MainView {
                 if(loadedSudoku != null) {
                     sudoku.load(loadedSudoku);
                 }
-            } catch (UnsupportedFormatException e) {
+            } catch (UnsupportedFormatException | ImportException e) {
                 AlertModal.error(
                     "Fehler beim Laden",
                     "Die Sudoku Datei konnte nicht geladen werden.",
@@ -60,11 +62,6 @@ class MainView {
             try {
                 controller.solveGame(sudoku.getSudoku());
                 sudoku.update();
-                AlertModal.ok(
-                    "Erfolgreich",
-                    "Das Sudoku konnte gelöst werden.",
-                    ""
-                ).showAndWait();
             } catch (UnsolvableException e) {
                 AlertModal.error(
                     "Fehler beim lösen",
@@ -80,6 +77,22 @@ class MainView {
         Button reset = new Button("Reset");
         reset.setOnAction(event -> sudoku.reset());
         return reset;
+    }
+
+    private Button getRandomSudokuButton() {
+        Button random = new Button("Random Sudoku");
+        random.setOnAction(event -> {
+            try {
+                sudoku.load(controller.getRandomSudoku());
+            } catch (ImportException e) {
+                AlertModal.error(
+                    "Fehler beim Laden",
+                    "Es konnte kein Sudoku geladen werden.",
+                    e.getMessage()
+                ).showAndWait();
+            }
+        });
+        return random;
     }
 
 }

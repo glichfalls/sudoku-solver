@@ -14,12 +14,20 @@ public class SudokuJsonImporter extends SudokuImporter {
 
     @Override
     protected int getDimension(ArrayList<String> lines) throws IOException {
-        return ((Long) parse(lines).get("size")).intValue();
+        try {
+            return Long.valueOf(parse(lines).get("size").toString()).intValue();
+        } catch (ClassCastException e) {
+            throw new IOException(e.getMessage());
+        }
     }
 
     @Override
     protected int getDimension(String puzzle) throws IOException {
-        return ((Long) parse(puzzle).get("size")).intValue();
+        try {
+            return Long.valueOf(parse(puzzle).get("size").toString()).intValue();
+        } catch (ClassCastException e) {
+            throw new IOException(e.getMessage());
+        }
     }
 
     @Override

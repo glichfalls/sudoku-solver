@@ -38,6 +38,7 @@ class SudokuPane extends HBox {
     }
 
     void update() {
+        grid.getChildren().clear();
         for(int x = 0; x < sudoku.getSize(); x++) {
             for(int y = 0; y < sudoku.getSize(); y++) {
                 set(sudoku.get(x, y));

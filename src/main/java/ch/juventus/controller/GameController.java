@@ -1,8 +1,13 @@
 package ch.juventus.controller;
 
+import ch.juventus.exceptions.ImportException;
 import ch.juventus.exceptions.UnsolvableException;
 import ch.juventus.exceptions.UnsupportedFormatException;
 import ch.juventus.importer.ImporterFactory;
+import ch.juventus.importer.PuzzleImporter;
+import ch.juventus.importer.SudokuJsonImporter;
+import ch.juventus.loader.PuzzleLoader;
+import ch.juventus.loader.SudokuLoader;
 import ch.juventus.puzzle.sudoku.Sudoku;
 import ch.juventus.solver.Solver;
 import ch.juventus.solver.SudokuSolver;
@@ -13,23 +18,25 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
-public class GameController {
+public final class GameController {
 
-    private Logger logger;
+    private final Logger logger = LoggerFactory.getLogger(GameController.class);
     private final ImporterFactory importerFactory = new ImporterFactory();
     private final Solver<Sudoku> solver = new SudokuSolver();
 
-    public GameController() {
-        logger = LoggerFactory.getLogger(GameController.class);
-    }
-
-    public Sudoku getSelectedSudoku() throws UnsupportedFormatException {
+    public Sudoku getSelectedSudoku() throws UnsupportedFormatException, ImportException {
         File file = getSudokuFile();
         if(file == null) {
             logger.warn("File selection was canceled.");
             return null;
         }
         return importerFactory.getSudokuImporterForFile(file).getPuzzleFromFile(file.getPath());
+    }
+
+    public Sudoku getRandomSudoku() throws ImportException {
+        PuzzleLoader loader = new SudokuLoader();
+        PuzzleImporter<Sudoku> importer = new SudokuJsonImporter();
+        return importer.getPuzzleFromString(loader.getRandom());
     }
 
     public void solveGame(Sudoku sudoku) throws UnsolvableException {

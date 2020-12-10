@@ -38,7 +38,7 @@ public abstract class SudokuImporter implements PuzzleImporter<Sudoku> {
         }
     }
 
-    private ArrayList<String> read(String path) {
+    private ArrayList<String> read(String path) throws ImportException {
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             ArrayList<String> lines = new ArrayList<>();
             String line;
