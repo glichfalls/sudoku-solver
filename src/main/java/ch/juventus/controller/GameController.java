@@ -26,7 +26,8 @@ public class GameController {
     public Sudoku getSelectedSudoku() throws UnsupportedFormatException {
         File file = getSudokuFile();
         if(file == null) {
-            throw new UnsupportedOperationException("Failed to select file.");
+            logger.warn("File selection was canceled.");
+            return null;
         }
         return importerFactory.getSudokuImporterForFile(file).getPuzzleFromFile(file.getPath());
     }
@@ -34,7 +35,7 @@ public class GameController {
     public void solveGame(Sudoku sudoku) throws UnsolvableException {
         if(sudoku == null) {
             logger.error("No Sudoku was loaded.");
-            return;
+            throw new UnsolvableException("No sudoku available to solve.");
         }
         solver.solve(sudoku);
     }
@@ -44,7 +45,7 @@ public class GameController {
         FileChooser openDialog = new FileChooser();
         openDialog.setTitle("Please chose a sudoku file");
         openDialog.getExtensionFilters().add(
-            new FileChooser.ExtensionFilter("Sudoku text files", "*.txt")
+            new FileChooser.ExtensionFilter("Sudoku text files", "*.txt", "*.json")
         );
         return openDialog.showOpenDialog(mainStage);
     }

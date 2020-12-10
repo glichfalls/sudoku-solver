@@ -2,8 +2,9 @@ package ch.juventus.fx;
 
 import ch.juventus.controller.GameController;
 import ch.juventus.exceptions.UnsolvableException;
+import ch.juventus.exceptions.UnsupportedFormatException;
+import ch.juventus.puzzle.sudoku.Sudoku;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -38,14 +39,16 @@ class MainView {
         Button load = new Button("Load Sudoku");
         load.setOnAction(event -> {
             try {
-                sudoku.load(controller.getSelectedSudoku());
-            } catch (Exception e) {
+                Sudoku loadedSudoku = controller.getSelectedSudoku();
+                if(loadedSudoku != null) {
+                    sudoku.load(loadedSudoku);
+                }
+            } catch (UnsupportedFormatException e) {
                 AlertModal.error(
                     "Fehler beim Laden",
                     "Die Sudoku Datei konnte nicht geladen werden.",
                     e.getMessage()
                 ).showAndWait();
-                System.out.println(e.getMessage());
             }
         });
         return load;
@@ -75,9 +78,7 @@ class MainView {
 
     private Button getResetButton() {
         Button reset = new Button("Reset");
-        reset.setOnAction(event -> {
-            sudoku.reset();
-        });
+        reset.setOnAction(event -> sudoku.reset());
         return reset;
     }
 
