@@ -6,3 +6,13 @@
 - auto solve sudokus
 - solve sudokus by yourself
 - auto generate random sudokus
+
+## Docs (UML)
+
+### Import
+
+![Sudoku Import](docs/sudoku_import.jpg)
+
+### Solver
+
+![Sudoku Solve](docs/sudoku_solve.jpg)
