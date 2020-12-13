@@ -62,9 +62,9 @@ public class SudokuSolver implements Solver<Sudoku> {
             for(int y = 0; y < sudoku.getSize(); y++) {
                 if(sudoku.isFilled(x, y)) {
                     filledFields++;
-                    int value = sudoku.get(x, y).number;
+                    int value = sudoku.get(x, y).getNumber();
                     if(sudoku.isNumberPresentMoreThanOnce(x, y, value)) {
-                        logger.warn("The number " + value + " in " + x + ", " + y + " occurs more than once.");
+                        logger.warn("The number {} in {}, {} occurs more than once.", value, x, y);
                         return false;
                     }
                 }

@@ -1,7 +1,5 @@
 package ch.juventus.importer;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -23,8 +21,8 @@ public class SudokuTextImporter extends SudokuImporter {
     }
 
     @Override
-    protected int getDimension(String content) throws IOException {
-        throw new NotImplementedException();
+    protected int getDimension(String content) {
+        throw new RuntimeException("Not implemented.");
     }
 
     @Override
@@ -37,8 +35,8 @@ public class SudokuTextImporter extends SudokuImporter {
     }
 
     @Override
-    protected int[][] getNumbers(String content) throws IOException {
-        throw new NotImplementedException();
+    protected int[][] getNumbers(String content) {
+        throw new RuntimeException("Not implemented.");
     }
 
     private int[] getNumbersFromLine(String line) throws IOException {

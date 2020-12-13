@@ -50,8 +50,8 @@ public class SudokuTest {
 
     @Test
     public void testExistingGet() {
-        assertEquals(7, solvable.get(0, 0).number);
-        assertEquals(Sudoku.EMPTY, solvable.get(0, 1).number);
+        assertEquals(7, solvable.get(0, 0).getNumber());
+        assertEquals(Sudoku.EMPTY, solvable.get(0, 1).getNumber());
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -97,7 +97,7 @@ public class SudokuTest {
         Sudoku sudoku = new Sudoku();
         SudokuValue value = new SudokuValue(0, 0, 2);
         sudoku.set(value);
-        assertSame(2, sudoku.get(0, 0).number);
+        assertSame(2, sudoku.get(0, 0).getNumber());
     }
 
     @Test(expected = InvalidFieldException.class)
@@ -119,6 +119,7 @@ public class SudokuTest {
         Sudoku sudoku = new Sudoku();
         SudokuValue value = new SudokuValue(0, 0, Sudoku.EMPTY);
         sudoku.set(value);
+        assertSame(Sudoku.EMPTY, sudoku.get(0, 0).getNumber());
     }
 
     @Test
@@ -126,10 +127,10 @@ public class SudokuTest {
         Sudoku sudoku = new Sudoku();
         SudokuValue value = new SudokuValue(0, 0, 7);
         sudoku.set(value);
-        assertSame(7, sudoku.get(0, 0).number);
+        assertSame(7, sudoku.get(0, 0).getNumber());
         value = new SudokuValue(0, 0, 8);
         sudoku.set(value);
-        assertSame(8, sudoku.get(0, 0).number);
+        assertSame(8, sudoku.get(0, 0).getNumber());
     }
 
     @Test
@@ -138,7 +139,7 @@ public class SudokuTest {
         SudokuValue value = new SudokuValue(0, 0, 7);
         sudoku.set(value);
         sudoku.clear();
-        assertSame(Sudoku.EMPTY, sudoku.get(0, 0).number);
+        assertSame(Sudoku.EMPTY, sudoku.get(0, 0).getNumber());
     }
 
 }

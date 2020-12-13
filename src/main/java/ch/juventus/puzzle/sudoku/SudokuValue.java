@@ -2,9 +2,9 @@ package ch.juventus.puzzle.sudoku;
 
 public class SudokuValue {
 
-    public int x;
-    public int y;
-    public int number;
+    private int x;
+    private int y;
+    private int number;
 
     public SudokuValue(int x, int y, int value) {
         this.x = x;
@@ -18,8 +18,20 @@ public class SudokuValue {
         this.number = value.equals("") ? Sudoku.EMPTY : Integer.parseInt(value);
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
     public String toString() {
-        return number != Sudoku.EMPTY ? String.valueOf(number) : "";
+        return getNumber() != Sudoku.EMPTY ? String.valueOf(getNumber()) : "";
     }
 
 }

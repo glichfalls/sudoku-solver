@@ -4,6 +4,8 @@ import javafx.scene.control.Alert;
 
 public class AlertModal {
 
+    private AlertModal() { }
+
     private static Alert create(Alert.AlertType type, String title, String header, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

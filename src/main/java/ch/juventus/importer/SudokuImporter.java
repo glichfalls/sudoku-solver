@@ -23,7 +23,7 @@ public abstract class SudokuImporter implements PuzzleImporter<Sudoku> {
             size = getDimension(lines);
             return new Sudoku(size, getNumbers(lines));
         } catch (IOException e) {
-            logger.error("Failed to import sudoku: " + e.getMessage());
+            logger.error("Failed to import sudoku: {}.", e.getMessage());
             throw new ImportException(e.getMessage());
         }
     }
@@ -33,7 +33,7 @@ public abstract class SudokuImporter implements PuzzleImporter<Sudoku> {
             size = getDimension(puzzle);
             return new Sudoku(size, getNumbers(puzzle));
         } catch (IOException e) {
-            logger.error("Failed to import sudoku: " + e.getMessage());
+            logger.error("Failed to import sudoku: {}.", e.getMessage());
             throw new ImportException(e.getMessage());
         }
     }
@@ -51,7 +51,7 @@ public abstract class SudokuImporter implements PuzzleImporter<Sudoku> {
         }
     }
 
-    protected int getNumber(String value) throws IOException, InvalidFieldException {
+    protected int getNumber(String value) throws IOException {
         try {
             int number = value.equals("") ? 0 : Integer.parseInt(value);
             if(number < 0 || number > size) {
@@ -61,7 +61,7 @@ public abstract class SudokuImporter implements PuzzleImporter<Sudoku> {
             return number;
         } catch (NumberFormatException e) {
             // catch wrong format
-            throw new IOException("invalid character `" + value + "` in input file");
+            throw new IOException("invalid character `" + value + "` in input file.");
         }
     }
 

@@ -9,7 +9,7 @@ public class Sudoku implements Puzzle {
 
     private Logger logger = LoggerFactory.getLogger(Sudoku.class);
 
-    public static int EMPTY = 0;
+    public static final int EMPTY = 0;
 
     private int size;
     private int[][] puzzle;
@@ -23,7 +23,7 @@ public class Sudoku implements Puzzle {
     public Sudoku(int size, int[][] puzzle) {
         this.size = size;
         this.puzzle = puzzle;
-        logger.debug("initialized new sudoku with size " + size + ".");
+        logger.debug("initialized new sudoku with size {}.", size);
     }
 
     /**
@@ -41,7 +41,7 @@ public class Sudoku implements Puzzle {
      * @return is set
      */
     public boolean isFilled(int x, int y) {
-        return get(x, y).number != Sudoku.EMPTY;
+        return get(x, y).getNumber() != Sudoku.EMPTY;
     }
 
     /**
@@ -174,14 +174,13 @@ public class Sudoku implements Puzzle {
     /**
      *  Set a value in the sudoku matrix
      * @param value the Sudoku value with x and y positions
-     * @throws InvalidFieldException if the value does not fit in the sudoku
      */
-    public void set(SudokuValue value) throws InvalidFieldException {
-        if(value.number > getSize() || value.number < Sudoku.EMPTY) {
-            throw new InvalidFieldException("the number " + value.number + " is not a valid sudoku number.");
+    public void set(SudokuValue value) {
+        if(value.getNumber() > getSize() || value.getNumber() < Sudoku.EMPTY) {
+            throw new InvalidFieldException("the number " + value.getNumber() + " is not a valid sudoku number.");
         }
-        logger.debug("Setting value in [" + value.x + "," + value.y + "] from " + puzzle[value.x][value.y] + " to " + value.number + "");
-        puzzle[value.x][value.y] = value.number;
+        logger.debug("Setting value in [{}, {}] from {} to {}.", value.getX(), value.getY(), puzzle[value.getX()][value.getY()], value.getNumber());
+        puzzle[value.getX()][value.getY()] = value.getNumber();
     }
 
     /**

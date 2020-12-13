@@ -4,6 +4,8 @@ import java.io.File;
 
 public class FileExtension {
 
+    private FileExtension() {}
+
     public static String getExtensionFromFile(File file) {
         return getExtensionFromPath(file.getPath());
     }

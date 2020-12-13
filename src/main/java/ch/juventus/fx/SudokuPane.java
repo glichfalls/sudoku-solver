@@ -48,9 +48,9 @@ class SudokuPane extends HBox {
     private void set(SudokuValue value) {
         TextField field = new TextField();
         field.setText(value.toString());
-        field.setOnKeyReleased(event -> sudoku.set(new SudokuValue(value.x, value.y, field.getText())));
+        field.setOnKeyReleased(event -> sudoku.set(new SudokuValue(value.getX(), value.getY(), field.getText())));
         field.getStyleClass().add("textFields");
-        grid.add(field, value.x, value.y);
+        grid.add(field, value.getX(), value.getY());
     }
 
 }

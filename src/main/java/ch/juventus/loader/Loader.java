@@ -18,16 +18,17 @@ public abstract class Loader implements PuzzleLoader {
         try {
             URL path = new URL(url);
             connection = (HttpURLConnection) path.openConnection();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
+            try(BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                StringBuilder response = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                logger.debug("Loaded puzzle: {}", response.toString());
+                return response.toString();
             }
-            logger.debug("Loaded puzzle: " + response.toString());
-            return response.toString();
         } catch (IOException e) {
-            logger.error("Failed to load puzzle from " + url);
+            logger.error("Failed to load puzzle from {}.", url);
             return null;
         } finally {
             if(connection != null) {
