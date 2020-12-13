@@ -1,25 +1,29 @@
 package ch.juventus.solver;
 
 import ch.juventus.exceptions.ImportException;
-import ch.juventus.exceptions.InvalidFieldException;
 import ch.juventus.exceptions.UnsolvableException;
-import ch.juventus.importer.PuzzleImporter;
-import ch.juventus.importer.SudokuTextImporter;
+import ch.juventus.exceptions.UnsupportedFormatException;
+import ch.juventus.importer.ImporterFactory;
 import ch.juventus.puzzle.sudoku.Sudoku;
 import org.junit.Test;
+
+import java.io.File;
 
 import static org.junit.Assert.*;
 
 public class SudokuSolverTest {
 
-    PuzzleImporter<Sudoku> importer = new SudokuTextImporter();
+    ImporterFactory factory = new ImporterFactory();
     Solver<Sudoku> solver = new SudokuSolver();
 
     @Test
-    public void testSolvableSudoku() throws UnsolvableException, ImportException, InvalidFieldException {
+    public void testSolvableSudoku() throws UnsolvableException, ImportException, UnsupportedFormatException {
 
-        Sudoku solution = importer.getPuzzleFromFile(getClass().getResource("/solution.txt").getPath());
-        Sudoku test = importer.getPuzzleFromFile(getClass().getResource("/solvable.txt").getPath());
+        File solutionFile = new File(getClass().getResource("/solution.txt").getPath());
+        File testFile = new File(getClass().getResource("/solvable.txt").getPath());
+
+        Sudoku solution = factory.getSudokuImporterForFile(solutionFile).getPuzzleFromFile(solutionFile.getPath());
+        Sudoku test = factory.getSudokuImporterForFile(testFile).getPuzzleFromFile(testFile.getPath());
 
         solver.solve(test);
 
@@ -28,8 +32,9 @@ public class SudokuSolverTest {
     }
 
     @Test(expected = UnsolvableException.class)
-    public void testUnsolvableSudoku() throws ImportException, UnsolvableException {
-        Sudoku test = importer.getPuzzleFromFile(getClass().getResource("/unsolvable.txt").getPath());
+    public void testUnsolvableSudoku() throws ImportException, UnsolvableException, UnsupportedFormatException {
+        File testFile = new File(getClass().getResource("/unsolvable.txt").getPath());
+        Sudoku test = factory.getSudokuImporterForFile(testFile).getPuzzleFromFile(testFile.getPath());
         solver.solve(test);
     }
 

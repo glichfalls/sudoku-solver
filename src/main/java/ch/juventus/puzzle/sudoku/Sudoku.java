@@ -177,7 +177,7 @@ public class Sudoku implements Puzzle {
      * @throws InvalidFieldException if the value does not fit in the sudoku
      */
     public void set(SudokuValue value) throws InvalidFieldException {
-        if(value.number > getSize() || value.number < 0) {
+        if(value.number > getSize() || value.number < Sudoku.EMPTY) {
             throw new InvalidFieldException("the number " + value.number + " is not a valid sudoku number.");
         }
         logger.debug("Setting value in [" + value.x + "," + value.y + "] from " + puzzle[value.x][value.y] + " to " + value.number + "");
