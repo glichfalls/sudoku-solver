@@ -11,7 +11,7 @@ import javafx.scene.layout.StackPane;
 class SudokuPane extends HBox {
 
     private Sudoku sudoku;
-    private GridPane grid = new GridPane();
+    private final GridPane grid = new GridPane();
 
     SudokuPane() {
         StackPane stack = new StackPane();

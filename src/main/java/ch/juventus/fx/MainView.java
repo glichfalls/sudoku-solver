@@ -12,11 +12,11 @@ import javafx.stage.Stage;
 
 class MainView {
 
-    private Stage stage;
-    private GameController controller;
-    private BorderPane root = new BorderPane();
-    private ButtonPane buttons = new ButtonPane();
-    private SudokuPane sudoku = new SudokuPane();
+    private final Stage stage;
+    private final GameController controller;
+    private final BorderPane root = new BorderPane();
+    private final ButtonPane buttons = new ButtonPane();
+    private final SudokuPane sudoku = new SudokuPane();
 
     MainView(Stage stage) {
         this.stage = stage;

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class SudokuJsonImporter extends SudokuImporter {
 
-    private JSONParser parser = new JSONParser();
+    private final JSONParser parser = new JSONParser();
 
     @Override
     protected int getDimension(ArrayList<String> lines) throws IOException {

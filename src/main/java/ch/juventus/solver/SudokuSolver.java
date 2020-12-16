@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 public class SudokuSolver implements Solver<Sudoku> {
 
-    private Logger logger;
+    private final Logger logger;
 
     public SudokuSolver() {
         logger = LoggerFactory.getLogger(SudokuSolver.class);

@@ -11,7 +11,7 @@ import java.net.URL;
 
 public abstract class Loader implements PuzzleLoader {
 
-    private Logger logger = LoggerFactory.getLogger(Loader.class);
+    private final Logger logger = LoggerFactory.getLogger(Loader.class);
 
     protected String get(String url) {
         HttpURLConnection connection = null;

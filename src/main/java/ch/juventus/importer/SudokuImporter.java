@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public abstract class SudokuImporter implements PuzzleImporter<Sudoku> {
 
-    private Logger logger = LoggerFactory.getLogger(SudokuImporter.class);
+    private final Logger logger = LoggerFactory.getLogger(SudokuImporter.class);
 
     protected int size;
 

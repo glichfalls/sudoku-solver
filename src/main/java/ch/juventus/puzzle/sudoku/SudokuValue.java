@@ -2,9 +2,9 @@ package ch.juventus.puzzle.sudoku;
 
 public class SudokuValue {
 
-    private int x;
-    private int y;
-    private int number;
+    private final int x;
+    private final int y;
+    private final int number;
 
     public SudokuValue(int x, int y, int value) {
         this.x = x;

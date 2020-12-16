@@ -7,11 +7,11 @@ import org.slf4j.LoggerFactory;
 
 public class Sudoku implements Puzzle {
 
-    private Logger logger = LoggerFactory.getLogger(Sudoku.class);
+    private final Logger logger = LoggerFactory.getLogger(Sudoku.class);
 
     public static final int EMPTY = 0;
 
-    private int size;
+    private final int size;
     private int[][] puzzle;
 
     public Sudoku() {
