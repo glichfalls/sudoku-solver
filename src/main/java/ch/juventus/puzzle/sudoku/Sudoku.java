@@ -165,10 +165,9 @@ public class Sudoku implements Puzzle {
      * @return true if it is present more than once
      */
     public boolean isNumberPresentMoreThanOnce(int x, int y, int number) {
-        return countOccurrencesInRow(x, number) +
-                countOccurrencesInColumn(y, number) +
-                countOccurrencesInSquare(x, y, number)
-                > 3;
+        return countOccurrencesInRow(x, number) > 1 ||
+                countOccurrencesInColumn(y, number) > 1 ||
+                countOccurrencesInSquare(x, y, number) > 1;
     }
 
     /**

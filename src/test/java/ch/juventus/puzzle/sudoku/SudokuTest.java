@@ -89,7 +89,22 @@ public class SudokuTest {
 
     @Test
     public void testIsNumberPresentMoreThanOnce() {
-        assertTrue(empty.isNumberPresent(0, 0, Sudoku.EMPTY));
+        assertTrue(empty.isNumberPresentMoreThanOnce(0, 0, Sudoku.EMPTY));
+    }
+
+    @Test
+    public void testIsNumberPresentMoreThanOnceEdgeCases() {
+        Sudoku sudoku = new Sudoku();
+        sudoku.set(new SudokuValue(1, 0, 4));
+        sudoku.set(new SudokuValue(2, 0, 3));
+        sudoku.set(new SudokuValue(7, 0, 3));
+        sudoku.set(new SudokuValue(4, 1, 4));
+        sudoku.set(new SudokuValue(2, 2, 4));
+        sudoku.set(new SudokuValue(1, 5, 4));
+        assertTrue(sudoku.isNumberPresentMoreThanOnce(2, 0, 3));
+        assertTrue(sudoku.isNumberPresentMoreThanOnce(1, 5, 4));
+        assertTrue(sudoku.isNumberPresentMoreThanOnce(2,2, 4));
+        assertFalse(sudoku.isNumberPresentMoreThanOnce(4, 1, 4));
     }
 
     @Test
