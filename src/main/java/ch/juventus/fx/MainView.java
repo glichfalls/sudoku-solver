@@ -47,8 +47,8 @@ class MainView {
                 }
             } catch (UnsupportedFormatException | ImportException e) {
                 AlertModal.error(
-                    "Fehler beim Laden",
-                    "Die Sudoku Datei konnte nicht geladen werden.",
+                    "Loading error",
+                    "The Sudoku file could not be loaded.",
                     e.getMessage()
                 ).showAndWait();
             }
@@ -64,8 +64,8 @@ class MainView {
                 sudoku.update();
             } catch (UnsolvableException e) {
                 AlertModal.error(
-                    "Fehler beim lösen",
-                    "Das Sudoku konnte nicht gelöst werden",
+                    "Solver error",
+                    "The Sudoku could not be solved.",
                     e.getMessage()
                 ).showAndWait();
             }
@@ -86,8 +86,8 @@ class MainView {
                 sudoku.load(controller.getRandomSudoku());
             } catch (ImportException e) {
                 AlertModal.error(
-                    "Fehler beim Laden",
-                    "Es konnte kein Sudoku geladen werden.",
+                    "Loading error",
+                    "No Sudoku could be loaded.",
                     e.getMessage()
                 ).showAndWait();
             }
