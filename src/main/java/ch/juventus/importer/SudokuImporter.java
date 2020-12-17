@@ -53,8 +53,8 @@ public abstract class SudokuImporter implements PuzzleImporter<Sudoku> {
 
     protected int getNumber(String value) throws IOException {
         try {
-            int number = value.equals("") ? 0 : Integer.parseInt(value);
-            if(number < 0 || number > size) {
+            int number = value.equals("") ? Sudoku.EMPTY : Integer.parseInt(value);
+            if(number < Sudoku.EMPTY || number > size) {
                 // catch out of bound
                 throw new InvalidFieldException("The number `" + number + "` does not fit in this sudoku.");
             }
