@@ -199,9 +199,23 @@ public class Sudoku implements Puzzle {
         logger.debug("cleared sudoku.");
     }
 
-    /**
-     * print the current state of the sudoku
-     */
+    public boolean isSolvable() {
+        int filledFields = 0;
+        for (int x = 0; x < getSize(); x++) {
+            for (int y = 0; y < getSize(); y++) {
+                if (isFilled(x, y)) {
+                    filledFields++;
+                    int value = get(x, y).getNumber();
+                    if (isNumberPresentMoreThanOnce(x, y, value)) {
+                        logger.warn("The number {} in {}, {} occurs more than once.", value, x, y);
+                        return false;
+                    }
+                }
+            }
+        }
+        return filledFields > 0;
+    }
+
     public void print() {
         for(int[] row : puzzle) {
             for(int column : row) {
